@@ -58,38 +58,20 @@ public class C01APractice {
 		int n2 = sc.nextInt();
 		System.out.print("세번째 정수를 입력하세요 : ");
 		int n3 = sc.nextInt();
-		if(n1 > n2 && n1 > n3)
-		{
-			System.out.println("가장 큰 수는 " + n1 + " 입니다");
-			if(n2 > n3)
-			{
-				System.out.println("가장 작은 수는 " + n3 + " 입니다");
-			}
-			else
-				System.out.println("가장 작은 수는 " + n2 + " 입니다");
-		}
 		
-		else if(n2 > n1 && n2 > n3)
-		{
-			System.out.println("가장 큰 수는 " + n2 + " 입니다");
-			if(n1 > n3)
-			{
-				System.out.println("가장 작은 수는 " + n3 + " 입니다");
-			}
-			else
-				System.out.println("가장 작은 수는 " + n1 + " 입니다");
-		}
+		if(n1 >= n2 && n1 >= n3)
+			System.out.println("큰 수 : " + n1);
+		if((n2 >= n1 && n2 >= n3) && (n2 != n1 && n2 != n3))
+			System.out.println("큰 수 : " + n2);
+		if((n3 >= n1 && n3 >= n2) && (n3 != n1))
+			System.out.println("큰 수 : " + n3);
+		if(n1 <= n2 && n1 <= n3)
+			System.out.println("작은 수 : " + n1);
+		if((n2 <= n1 && n2 <= n3) && (n2 != n1 && n2 != n3))
+			System.out.println("작은 수 : " + n2);
+		if((n3 <= n1 && n3 <= n2) && (n3 != n1))
+			System.out.println("작은 수 : " + n3);
 		
-		else
-		{
-			System.out.println("가장 큰 수는 " + n3 + " 입니다");
-			if(n1 > n2)
-			{
-				System.out.println("가장 작은 수는 " + n2 + " 입니다");
-			}
-			else
-				System.out.println("가장 작은 수는 " + n1 + " 입니다");
-		}
 			
 	}
 
