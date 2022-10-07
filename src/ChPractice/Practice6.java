@@ -2,7 +2,10 @@ package ChPractice;
 
 public class Practice6 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
+		
+		//배열
 		int[] scores = {83,90,87};
 		
 		System.out.println("scores[0] : " + scores[0]);
