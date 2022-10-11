@@ -105,7 +105,7 @@ public class C01While {
 		
 		
 		//문제
-		//구구단 n단 출력(입력받기,역순출력)
+		//구구단 n단 출력(입력받기,역순출력) (별첨 .... 2<=N<=9)
 //		int i = 9;
 //		System.out.print("원하는 구구단 숫자 입력 : ");
 //		int j = sc.nextInt();
@@ -121,33 +121,41 @@ public class C01While {
 		//ex)5를 입력 받았다면 3,6,9,12,15를 출력
 //		System.out.print("원하는 출력 개수 입력 : ");
 //		int input = sc.nextInt();
-//		int i = 3;
-//		while(i <= 3 * input)
+//		System.out.print("출력할 배수 입력 : ");
+//		int input2 = sc.nextInt();
+//		int i = input2;
+//		while(i <= input2 * input)
 //		{
-//			System.out.println(i);
-//			i += 3;
+//			if(i < input2 * input)
+//				System.out.print(i+",");
+//			else
+//				System.out.print(i);
+//			
+//			i += input2;
 //		}
 		
 		
 		//문제
 		//1부터 100까지 수 중에 짝수의 합과 홀수의 합을 각각 구해서 출력하세요
 //		int i = 1;
-//		int sumodd = 0;
-//		int sumeven = 0;
+//		int oddsum = 0;
+//		int evensum = 0;
 //		while(i <= 100)
 //		{
 //			if(i % 2 == 0)
 //			{
-//				sumeven += i;
+//				System.out.println("짝수 i = " + i);
+//				evensum += i;
 //			}
-//			if(i % 2 == 1)
+//			else
 //			{
-//				sumodd += i;
+//				System.out.println("홀수 i = " + i);
+//				oddsum += i;
 //			}
 //			i++;
 //		}
-//		System.out.println("짝수의 합 : " + sumeven);
-//		System.out.println("홀수의 합 : " + sumodd);
+//		System.out.println("짝수의 합 : " + evensum);
+//		System.out.println("홀수의 합 : " + oddsum);
 		
 		
 		//문제
@@ -155,22 +163,22 @@ public class C01While {
 //		int i = 1;
 //		System.out.print("원하는 정수를 입력하세요 : " );
 //		int input = sc.nextInt();
-//		int sumodd = 0;
-//		int sumeven = 0;
+//		int oddsum = 0;
+//		int evensum = 0;
 //		while(i <= input)
 //		{
 //			if(i % 2 == 0)
 //			{
-//				sumeven += i;
+//				evensum += i;
 //			}
-//			if(i % 2 == 1)
+//			else
 //			{
-//				sumodd += i;
+//				oddsum += i;
 //			}
 //			i++;
 //		}
-//		System.out.println("짝수의 합 : " + sumeven);
-//		System.out.println("홀수의 합 : " + sumodd);
+//		System.out.println("짝수의 합 : " + evensum);
+//		System.out.println("홀수의 합 : " + oddsum);
 		
 		
 		//문제
@@ -179,30 +187,48 @@ public class C01While {
 //		System.out.print("정수 입력 : " );
 //		int n = sc.nextInt();
 //		int sum = 0;
-//		while(i < n)
+//		while(i <= n)
 //		{
-//			if(i % 3 == 0)
-//			{
-//				i++;
-//			}
-//			sum += i;
+//			if(i % 3 != 0)
+//				sum += i;
 //			i++;
 //		}
 //		System.out.println("1부터 " + n + " 까지의 수 중 3의 배수를 제외한 합 : " + sum);
 		
 		
+		
+		
+//		String str = "안녕?";
+//		System.out.println("길이 : " + str.length());
+//		str = str + " 반갑다";
+//		System.out.println(str);
+		
+		
 		//문제
 		//문자열을 입력받아서 각 문자를 거꾸로 출력해보세요
-		//입력 : apple , 출력 : elppa
-		System.out.print("문자열 입력 : ");
-		String s = sc.next();
-		int i = s.length()-1;
-		while(i >= 0)
-		{
-			System.out.print(s.charAt(i));
-			i--;
-		}
+		//입력 : apple , 출력 : elppa		
 		
+//		System.out.print("문자열 입력 : ");
+//		String s = sc.next();
+//		int len = s.length()-1;
+//		
+//		//예제 1
+//		while(len >= 0)
+//		{
+//			System.out.print(s.charAt(len));
+//			len--;
+//		}
+//		
+//		//예제 2
+//		String r = "";
+//		while(len >= 0)
+//		{
+//			r += s.charAt(len);
+//			len--;
+//		}
+//		System.out.println(r);
+//		
+//		sc.close();
 		
 	}
 
