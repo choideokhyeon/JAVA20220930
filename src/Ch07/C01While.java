@@ -227,8 +227,12 @@ public class C01While {
 //			len--;
 //		}
 //		System.out.println(r);
-//		
-//		sc.close();
+		
+		
+		
+		
+		
+		sc.close();
 		
 	}
 
