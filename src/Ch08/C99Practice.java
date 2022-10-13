@@ -6,9 +6,13 @@ class Sub
 {
 	Scanner sc = new Scanner(System.in);
 	
+//  int=반환값타입	  (매개변수)
 	int sub1(int x, int y)
 	{
-		return x + y;
+		if(x > y)
+			return x - y;
+		else
+			return y - x;
 	}
 	
 	int sub2()
@@ -16,7 +20,7 @@ class Sub
 		System.out.print("sub2 함수 정수 2개 입력 : ");
 		int x = sc.nextInt();
 		int y = sc.nextInt();
-		return x + y;
+		return x - y;
 	}
 	
 	void sub3()
@@ -24,7 +28,7 @@ class Sub
 		System.out.print("sub3 함수 정수 2개 입력 : ");
 		int x = sc.nextInt();
 		int y = sc.nextInt();
-		System.out.println("sub3() : " + (x+y));
+		System.out.printf("%d - %d = %d\n", x, y, (x-y));
 	}
 	
 	void sub4(int x, int y)
@@ -40,11 +44,11 @@ public class C99Practice {
 		
 		Sub calc = new Sub();
 		
-		int r1 = calc.sub1(10,20);
+		int r1 = calc.sub1(20,10);
 		System.out.println("sub1(x,y) = " + r1);
 		
 		int r2 = calc.sub2();
-		System.out.println("sub2() " + r2);
+		System.out.println("sub2() = " + r2);
 		
 		calc.sub3();
 		calc.sub4(10,20);
