@@ -5,6 +5,7 @@ class C97Person{
 	String name;
 	int age;
 	String addr;
+	
 	//기능(멤버매서드)	
 	C97Person()
 	{

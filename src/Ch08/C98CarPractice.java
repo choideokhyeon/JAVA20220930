@@ -49,10 +49,11 @@ class C98Car
 }
 public class C98CarPractice {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 	
 		//다음 코드가 문제 없도록 클래스 구성을 합니다
 		//toString() 코드 삽입으로 멤버변수 값 확인합니다
+		C98Car ob = new C98Car();
 		
 		C98Car ob1  = new C98Car("홍길동",0,100,"코나"); //owner,speed,fuel,model
 		System.out.println(ob1.toString());
