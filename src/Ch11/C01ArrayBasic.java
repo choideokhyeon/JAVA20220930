@@ -13,6 +13,7 @@ public class C01ArrayBasic {
 		ar1[2] = sc.nextInt();
 		ar1[3] = sc.nextInt();
 		ar1[4] = sc.nextInt();
+
 		
 		//기존 방식
 		for(int i = 0; i < ar1.length; i++)

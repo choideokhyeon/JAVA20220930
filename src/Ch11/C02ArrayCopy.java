@@ -8,6 +8,8 @@ public class C02ArrayCopy {
 		int [] arr1 = {10,20,30};
 		
 		//얕은 복사(위치값 복사)
+		//arr1 : [I@626b2d4a
+		//arr2 : [I@626b2d4a
 		int [] arr2 = arr1;
 		
 		
