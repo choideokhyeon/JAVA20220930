@@ -18,24 +18,22 @@ class Super
 class Sub extends Super
 {
 	int num2;	//확장
-//	public void move()	//확장
-//	{
-//		System.out.println("Sub1 move1()");
-//	}
+	public void move()
+	{
+		System.out.println("Sub1 move1()");		//확장
+	}
 	public void sound()
 	{
-		System.out.println("Sub's Sound1()");
+		System.out.println("Sub's Sound1()");	//재정의
 	}
 }
 
 public class C04MethodInfo {
 
 	public static void main(String[] args) {
-		//정상범위
-		
 		Super ob1 = new Super();
 		Super ob2 = new Super();
-		
 		Sub ob3 = new Sub();
+
 	}
 }
