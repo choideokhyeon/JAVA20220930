@@ -42,7 +42,7 @@ class Account
 
 	@Override
 	public String toString() {
-		return "Account [ano=" + ano + ", owner=" + owner + ", balance=" + balance + "]";
+		return "[예금주:" + owner + ", 계좌번호:" + ano + ", 통장잔고:" + balance + "]";
 	}
 	
 }
