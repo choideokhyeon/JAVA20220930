@@ -1,4 +1,4 @@
-package Ch16EXC;
+package Ch16EXEC;
 
 import java.util.Scanner;
 
