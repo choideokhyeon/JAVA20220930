@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Administrator/Downloads/bcrypt-0.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Administrator/Downloads/jsoup-1.15.3.jar"/>
+	<classpathentry kind="lib" path="C:/정보처리과정평가/설치파일/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
