@@ -29,7 +29,7 @@ class C01GUI extends JFrame implements ActionListener, KeyListener
 	
 	C01GUI()
 	{
-		super("Chatting Server");
+		super("Chatting Serverww");
 		
 		JPanel pn = new JPanel();
 		
