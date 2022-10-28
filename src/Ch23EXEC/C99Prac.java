@@ -69,7 +69,7 @@ public class C99Prac {
 					System.out.println("계정 생성 완료!");
 				else
 					System.out.println("계정 생성 실패..");
-				}
+				} 
 				
 				else if(num == 2)
 				{
