@@ -135,7 +135,7 @@ public class C98Prac {
 						else
 						{
 							pstmt.setInt(1, rs.getInt("level"));
-							pstmt.setDouble(2, (rs.getDouble("exp") + rs.getInt("level")/50) );	//연산 안되는거 해결
+							pstmt.setDouble(2, rs.getDouble("exp") + 2/(double)rs.getInt("level") );	//연산 안되는거 해결
 							pstmt.setInt(3, rs.getInt("hp")-5);
 							pstmt.setInt(4, rs.getInt("damage"));
 							pstmt.setInt(5, inputcode);
