@@ -13,6 +13,11 @@ public class MemberDTO {
 		this.addr = addr;
 		this.phone = phone;
 	}
+	
+	MemberDTO()
+	{
+		
+	}
 
 	public int getNo() {
 		return no;
@@ -44,5 +49,10 @@ public class MemberDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberDTO [no=" + no + ", email=" + email + ", addr=" + addr + ", phone=" + phone + "]";
 	}
 }
