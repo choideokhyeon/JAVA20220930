@@ -2,7 +2,7 @@ package StarCraft;
 
 public class Factory extends Building implements Lift {
 
-	private FactoryAddOn extendOn;
+	public FactoryAddOn extendOn;
 	
 	void ExtendFactory()
 	{
