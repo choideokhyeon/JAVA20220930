@@ -1,4 +1,4 @@
-package Ch36;
+package Ch36ClassDiagram;
 
 import java.util.ArrayList;
 import java.util.List;
