@@ -1,6 +1,6 @@
-package Ch38Domain;
+package Ch38.Domain;
 
-public class BookDTO {
+public class BookDTO extends DTO {
 	private int bookCode;
 	private String bookName;
 	private boolean isLend;
