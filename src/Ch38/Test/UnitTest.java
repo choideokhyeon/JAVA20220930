@@ -1,7 +1,7 @@
 package Ch38.Test;
 
-import Ch38.Controller.FrontController;
-import Ch38.Domain.MemberDTO;
+import Ch38.Service.AuthService;
+import Ch38.Service.LendService;
 
 public class UnitTest {
 
@@ -36,7 +36,7 @@ public class UnitTest {
 //			System.out.println("INSERT 실패..");
 //		}
 		
-		FrontController controller = new FrontController();
+//		FrontController controller = new FrontController();
 //		controller.ExSubController("/member", 1);
 		
 		//도서 등록 (메뉴, SN, 책DTO)
@@ -45,13 +45,69 @@ public class UnitTest {
 //			System.out.println("[View] " + obj.toString());
 		
 		//멤버 등록 (메뉴, SN, 멤버DTO)
-		Object obj = controller.ExSubController("/member", 1, new MemberDTO("mem2", "2222"));
-		if(obj != null)
-			System.out.println("[View] " + obj.toString());
-
+//		Object obj = controller.ExSubController("/member", 1, new MemberDTO("mem3", "3333"));
+//		if(obj != null)
+//			System.out.println("[View] " + obj.toString());
+		
+//		MemberDAO dao = MemberDAO.getInstance();
+//		MemberDTO dto = dao.Select("mgr1");
+//		System.out.println("DTO : " + dto);
+		
+//		AuthService service = AuthService.getInstance();
+//		Integer result = service.LoginCheck("mgr1","1111");
+//		if(result != null)
+//			System.out.println("[VIEW] 로그인 성공! ROLE : " + result);
+//		else
+//			System.out.println("[VIEW] 로그인 실패");
 		
 		
+//		FrontController controller = new FrontController();
+		//서비스요청 , 요청번호, DTO
+//		Integer result = (Integer)controller.ExSubController("/auth", 1, new MemberDTO("mgr","1111"));
+//		if(result == null)
+//			System.out.println("[VIEW] 로그인 실패");
+//		else
+//			System.out.println("[VIEW] 로그인 성공 ROLE : " + result);
 		
-
+//		LendDAO dao = LendDAO.getInstance();
+//		dao.Insert(new LendDTO(0,2020,"bbbb","2022-11-10","2022-11-17"));
+		
+		//DataFormat지정 객체
+//		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+//		//날짜정보객체
+//		Calendar cal = Calendar.getInstance();
+//		//현재 날짜정보를 문자열로 저장 start
+//		String start = fmt.format(cal.getTime()).toString();		
+//		System.out.println("start : " + start);
+//		//7일 이후 날짜로 등록 
+//		cal.add(Calendar.DATE, 7);
+//		String end = fmt.format(cal.getTime()).toString();	
+//		System.out.println("end : " + end );
+		
+		
+		boolean Loginstate = false;
+		String userid = null;
+		Integer perm = 0;	//0비회원 1회원 2관리자(사서)
+		
+		//인증 서비스
+		AuthService authservice = AuthService.getInstance();
+		perm = authservice.LoginCheck("mem1", "1111");
+		if(perm > 0)
+		{
+			Loginstate = true;
+			userid="mem1";
+		}
+		else
+			perm = 0;
+		
+		//대여 서비스
+		LendService lendservice = LendService.getInstance();
+		
+		boolean result = lendservice.LendBook(Loginstate, perm, userid, 4040);
+		if(result)
+			System.out.println("[VIEW] 대여 성공!");
+		else
+			System.out.println("[VIEW] 대여 실패..");
+		
 	}
 }

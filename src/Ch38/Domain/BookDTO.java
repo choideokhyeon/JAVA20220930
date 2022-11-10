@@ -53,4 +53,5 @@ public class BookDTO extends DTO {
 	public void setLend(boolean isLend) {
 		this.isLend = isLend;
 	}
+	
 }

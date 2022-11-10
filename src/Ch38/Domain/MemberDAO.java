@@ -38,10 +38,6 @@ public class MemberDAO {
 				}
 			}
 		
-		//전체 조회하기
-		
-		//선택 조회하기
-		
 		//등록하기
 		public int Insert(MemberDTO dto)
 		{	
@@ -56,6 +52,34 @@ public class MemberDAO {
 			} catch (SQLException e) {e.printStackTrace();}
 			
 			return result;
+		}
+		
+		//조회하기
+		public MemberDTO Select(String id)
+		{	
+			//pstmt
+			MemberDTO dto = null;
+			try
+			{
+				pstmt = conn.prepareStatement("select * from tbl_member where memid=?");
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				if(rs != null)
+					while(rs.next())
+					{
+						dto = new MemberDTO();
+						dto.setMemId(rs.getString("memid"));
+						dto.setPwd(rs.getString("pwd"));
+						dto.setRole(rs.getInt("role"));
+					}
+			} catch (Exception e) {e.printStackTrace();}
+			finally
+			{
+				try
+				{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
+			}
+			
+			return dto;
 		}
 		
 		//수정하기

@@ -8,8 +8,8 @@ public class MemberService {
 	private MemberDAO dao = MemberDAO.getInstance();
 	
 	//싱글톤 패턴 추가
-	private MemberService instance;
-	public MemberService getInstance()
+	private static MemberService instance;
+	public static MemberService getInstance()
 	{
 		if(instance == null)
 			instance = new MemberService();
@@ -18,7 +18,6 @@ public class MemberService {
 	
 	public MemberService() {}
 	
-	//멤버 조회하기
 	//멤버 등록하기
 	
 //	--내일
@@ -30,7 +29,6 @@ public class MemberService {
 			return true;
 		return false;
 	}
-	
 	
 	//멤버 수정하기
 	//멤버 삭제하기

@@ -21,6 +21,7 @@ public class FrontController {
 	{
 		map.put("/member", new MemberController());
 		map.put("/book", new BookController());
+		map.put("/auth", new AuthController());
 	}
 	
 	//사용자로부터 요청서비스명,서비스번호(SN)를 받아 요청 처리 Controller 실행
