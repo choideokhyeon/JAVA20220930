@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import oracle.net.aso.i;
 
 public class BookDAO {
 	
@@ -110,6 +114,103 @@ public class BookDAO {
 		
 		return result;
 	}
+
+//	public BookDTO selectAll() {
+//		BookDTO dto = null;
+//		try
+//		{
+//			pstmt = conn.prepareStatement("select * from tbl_book");
+//			rs = pstmt.executeQuery();
+//			ResultSetMetaData rsmd = rs.getMetaData();
+//			if(rs != null)
+//			{
+//					System.out.print(rsmd.getColumnName(1) + "\t|");
+//					System.out.print(rsmd.getColumnName(2) + "\t|");
+//					System.out.print(rsmd.getColumnName(3) + "\n");
+//					while(rs.next())
+//					{
+//						System.out.print(rs.getInt("bookcode") + "\t\t|");
+//						System.out.print(rs.getString("bookname") + "\t|");
+//						System.out.print(rs.getInt("islend") + "\n");
+//					}
+//				}
+//		} catch (SQLException e) {e.printStackTrace();}
+//		finally
+//		{
+//			try
+//			{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
+//		}
+//		return dto;
+//	}
+	
+
+	
+//	public ArrayList<BookDTO> SelectAll() {
+//
+//		ArrayList<BookDTO> list = new ArrayList<BookDTO>();
+//		BookDTO dto;
+//		// pstmt
+//
+//		try {
+//			pstmt = conn.prepareStatement("select * from tbl_book");
+//			rs = pstmt.executeQuery();
+//			if (rs != null) {
+//				while (rs.next()) {
+//					dto=new BookDTO();
+//					dto.setBookCode(rs.getInt("bookcode"));
+//					dto.setBookName(rs.getString("bookname"));
+//					if(rs.getInt("islend")==1)
+//						dto.setLend(true);
+//					else
+//						dto.setLend(false);
+//					list.add(dto);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			try{rs.close();}catch(Exception e) {e.printStackTrace();}
+//			try{pstmt.close();}catch(Exception e) {e.printStackTrace();}
+//		}
+//
+//		return list;
+//
+//	}
+	
+	
+	
+	
+	public ArrayList<BookDTO> SelectAll() {
+		ArrayList<BookDTO> list = new ArrayList<>();
+		try
+		{
+			pstmt = conn.prepareStatement("select * from libdb.tbl_book");
+			rs = pstmt.executeQuery();
+			if(rs != null)
+			{
+				int i = 0;
+				while(rs.next())
+				{
+					BookDTO dto = new BookDTO(rs.getInt("bookcode"),rs.getString("bookname"),rs.getBoolean("islend"));
+					list.add(dto);
+					list.get(i);
+					i++;
+					if(rs.getString("bookname") == null)
+						break;
+				}
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+		finally
+		{
+			try
+			{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
+		}
+		return list;
+	}
+	
+	
+	
+
 	
 	//삭제하기
 	

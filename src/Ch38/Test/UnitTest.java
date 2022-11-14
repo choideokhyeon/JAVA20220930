@@ -1,5 +1,12 @@
 package Ch38.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import Ch38.Controller.FrontController;
+import Ch38.Domain.BookDTO;
+import Ch38.Domain.LendDTO;
+import Ch38.Domain.MemberDTO;
 import Ch38.Service.AuthService;
 import Ch38.Service.LendService;
 
@@ -85,29 +92,79 @@ public class UnitTest {
 //		System.out.println("end : " + end );
 		
 		
+//		boolean Loginstate = false;
+//		String userid = null;
+//		Integer perm = 0;	//0비회원 1회원 2관리자(사서)
+//		
+//		//인증 서비스
+//		AuthService authservice = AuthService.getInstance();
+//		perm = authservice.LoginCheck("mem1", "1111");
+//		if(perm > 0)
+//		{
+//			Loginstate = true;
+//			userid="mem1";
+//		}
+//		else
+//			perm = 0;
+//		
+//		//대여 서비스
+//		LendService lendservice = LendService.getInstance();
+//		
+//		boolean result = lendservice.LendBook(Loginstate, perm, userid, 4040);
+//		if(result)
+//			System.out.println("[VIEW] 대여 성공!");
+//		else
+//			System.out.println("[VIEW] 대여 실패..");
+		
+		
+		//LendController Tests
+//		boolean Loginstate = false;
+//		String userid = null;
+//		Integer perm = 0;
+//		
+//		FrontController controller = new FrontController();
+//		
+//		//1 로그인
+//		perm = (Integer)controller.ExSubController("/auth", 1, new MemberDTO("mem1","1111"));
+//		if(perm > 0)
+//		{
+//			userid = "mem1";
+//			Loginstate = true;
+//		}
+//		
+//		//대여하기
+//		LendDTO LDTO = new LendDTO();
+//		LDTO.setMemid(userid);
+//		LDTO.setLogin(Loginstate);
+//		LDTO.setPerm(perm);
+//		LDTO.setBookcode(3030);
+//		String msg = (String)controller.ExSubController("/lend", 1, LDTO);
+//		System.out.println("[VIEW] " + msg);
+		
+		
+		
+		
+		//로그인 이후 전체 도서 정보를 Console 화면에 출력
 		boolean Loginstate = false;
 		String userid = null;
-		Integer perm = 0;	//0비회원 1회원 2관리자(사서)
+		Integer perm = 0;
 		
-		//인증 서비스
-		AuthService authservice = AuthService.getInstance();
-		perm = authservice.LoginCheck("mem1", "1111");
+		FrontController controller = new FrontController();
+		
+		//1 로그인
+		perm = (Integer)controller.ExSubController("/auth", 1, new MemberDTO("mem1","1111"));
 		if(perm > 0)
 		{
+			userid = "mem1";
 			Loginstate = true;
-			userid="mem1";
 		}
-		else
-			perm = 0;
 		
-		//대여 서비스
-		LendService lendservice = LendService.getInstance();
-		
-		boolean result = lendservice.LendBook(Loginstate, perm, userid, 4040);
-		if(result)
-			System.out.println("[VIEW] 대여 성공!");
-		else
-			System.out.println("[VIEW] 대여 실패..");
+		// 2 전체 도서조회
+		ArrayList<BookDTO> list = (ArrayList<BookDTO>)controller.ExSubController("/book", 5, null);
+		for(BookDTO dto : list)
+		{
+			System.out.println(dto.toString());
+		}
 		
 	}
 }

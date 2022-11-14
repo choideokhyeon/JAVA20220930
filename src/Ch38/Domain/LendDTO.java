@@ -1,7 +1,9 @@
 package Ch38.Domain;
 
-public class LendDTO {
+public class LendDTO extends DTO{
 	private int Lid;
+	private boolean login;
+	private int perm;
 	private int bookcode;
 	private String memid;
 	private String startDate;
@@ -46,6 +48,22 @@ public class LendDTO {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isLogin() {
+		return login;
+	}
+
+	public void setLogin(boolean login) {
+		this.login = login;
+	}
+
+	public int getPerm() {
+		return perm;
+	}
+
+	public void setPerm(int perm) {
+		this.perm = perm;
 	}
 
 	//toString() 재정의
