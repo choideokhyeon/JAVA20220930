@@ -62,7 +62,7 @@ public class UserDAO {
 		}
 	
 		
-		public void Loginstatus(String name)
+		public UserDTO Loginstatus(String name)
 		{	
 			//pstmt
 			UserDTO dto = new UserDTO();
@@ -94,22 +94,25 @@ public class UserDAO {
 				try
 				{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
 			}
+			
+			return dto;
 		}
 
 		
-		public int Logout(UserDTO dto)
+		public int Logout(String id)
 		{
 			//pstmt
+			UserDTO dto = new UserDTO();
 			int result = 0;
 			try
 			{
 				pstmt = conn.prepareStatement("select loginstatus,userid from usertbl where username=?");
-				pstmt.setString(1, dto.getUsername());
+				pstmt.setString(1, id);
 				rs = pstmt.executeQuery();
 				if(rs != null)
 				{
-					rs.next();
 					dto = new UserDTO();
+					rs.next();
 					dto.setLoginstatus(rs.getInt("loginstatus"));
 					dto.setUserid(rs.getInt("userid"));
 					if(rs.getInt("loginstatus") == 1)
@@ -134,7 +137,7 @@ public class UserDAO {
 		
 		
 		public UserDTO Select(String name) {
-			UserDTO dto = null;
+			UserDTO dto = new UserDTO();
 			try
 			{
 				pstmt = conn.prepareStatement("select * from usertbl where username=?");
@@ -185,6 +188,8 @@ public class UserDAO {
 							System.out.print(rs.getInt("money") + "\t\t|");
 							System.out.print(rs.getInt("jewel") + "\n");
 							System.out.println();
+							dto.setUsername(rs.getString("username"));
+							dto.setPwd(rs.getString("pwd"));
 						}
 					}
 				}

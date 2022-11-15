@@ -1,5 +1,11 @@
 package Ch99.Service;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import Ch99.Domain.UserDAO;
 import Ch99.Domain.UserDTO;
 
@@ -22,41 +28,102 @@ private UserDAO dao = UserDAO.getInstance();
 	public UserDTO LoginCheck(String id, String pwd)
 	{
 		UserDTO dto = new UserDTO();
-		dao.Loginstatus(id);
-		//ID 일치 PW일치여부 확인
-		if(id.equals(dto.getUsername()) && pwd.equals(dto.getPwd()))
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try
 		{
-			System.out.println("[SYSTEM] 로그인에 성공했습니다");
-			dao.Loginstatus(dto.getUsername());
-		}
-		
-		else
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gachadb","root","1234");
+			pstmt = conn.prepareStatement("select username,pwd from usertbl where username=?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs != null)
+			{
+				while(rs.next())
+				{
+					//ID 일치 PW일치여부 확인
+					if(id.equals(rs.getString("username")) && pwd.equals(rs.getString("pwd")))
+					{
+						dao.Loginstatus(id);
+						System.out.println("[SYSTEM] 로그인에 성공했습니다");
+					}
+					
+					else
+					{
+						System.out.println("[SYSTEM] 로그인에 실패했습니다");
+					}
+				}
+			}
+		}catch (SQLException e) {e.printStackTrace();}
+		finally
 		{
-			System.out.println("[SYSTEM] 로그인에 실패했습니다");
+			try
+			{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
 		}
-		
 		return dto;
 	}
 
 	public UserDTO LogOut(String id)
 	{
-		UserDTO dto = null;
-		dto = dao.Select(id);
-		if(dto == null)
+		UserDTO dto = new UserDTO();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try
 		{
-			System.out.println("[SYSTEM] 로그아웃에 실패했습니다");
-		}
-		
-		if(id.equals(id))
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gachadb","root","1234");
+			pstmt = conn.prepareStatement("select username,pwd,loginstatus from usertbl where username=?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs != null)
+			{
+				while(rs.next())
+				{
+					if(rs.getInt("loginstatus") == 0)
+					{
+						System.out.println("[SYSTEM] 현재 로그인 상태가 아닙니다");
+					}
+					else
+					{
+						//ID 일치 여부 확인
+						if(id.equals(rs.getString("username")))
+						{
+							dao.Logout(id);
+							System.out.println("[SYSTEM] 로그아웃에 성공했습니다.");
+						}
+						
+						else
+						{
+							System.out.println("[SYSTEM] 로그아웃에 실패했습니다.");
+						}
+					}
+				}
+			}
+		}catch (SQLException e) {e.printStackTrace();}
+		finally
 		{
-			System.out.println("[SYSTEM] 로그아웃 했습니다");
-			dao.Logout(dto);
+			try
+			{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
 		}
-		else
-		{	
-			System.out.println("[SYSTEM] 로그아웃에 실패했습니다");
-		}
-		
 		return dto;
+		
+//		if(dto.getLoginstatus() == 0)
+//		{
+//			System.out.println("[SYSTEM] 로그아웃에 실패했습니다");
+//		}
+//		
+//		else
+//		{
+//			
+//			if(id.equals(dto.getUsername()))
+//			{
+//				System.out.println("[SYSTEM] 로그아웃 했습니다");
+//				dao.Logout(id);
+//			}
+//			else
+//			{	
+//				System.out.println("[SYSTEM] 로그아웃에 실패했습니다");
+//			}
+//		}
+//			
+//		return dto;
 	}
 }
