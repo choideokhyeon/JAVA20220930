@@ -3,15 +3,26 @@ package Team.View;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.PrimitiveIterator.OfDouble;
 
 import javax.swing.*;
 
+import com.mysql.cj.exceptions.RSAException;
+
+import Team.Controller.FrontController;
+import Team.Domain.DTO;
+import Team.Domain.MemDAO;
+import Team.Domain.MemDTO;
+
 public class GUIView extends JFrame implements ActionListener {
 	
-	// Controller 관련 처리 멤버
-	private boolean Loginstate = false;
-	private String userid = null;
-	private Integer perm = 0;
+	private FrontController controller = new FrontController();
+	int loginstatus = 0;
+	int perm = 0;
 	
 	
 	//액션 처리 관련 멤버
@@ -33,7 +44,11 @@ public class GUIView extends JFrame implements ActionListener {
 	
 	//회원 가입 관련 처리
 	JFrame Joinview = new JFrame("회원 가입");
-	JTextField txjname;JTextField txjpw;JTextField txjaddr;
+	JButton okbtn;JButton nobtn;
+	JTextField txjoinID;JTextField txjoinPW;
+	JTextField txjoinName;JTextField txjoinAddr;JTextField txjoinPhone;
+	JLabel lbjoinID;JLabel lbjoinPW;
+	JLabel lbjoinName;JLabel lbjoinAddr;JLabel lbjoinPhone;
 	
 
 	GUIView() {
@@ -72,7 +87,7 @@ public class GUIView extends JFrame implements ActionListener {
 		scroll.setBounds(10,300,465,150);
 		
 		txprodname = new JTextField();
-		txprodname.setBounds(120,20,170,35);
+		txprodname.setBounds(70,20,250,35);
 		
 		lbprodname = new JLabel("상품명");
 		lbprodname.setBounds(10,20,130,35);
@@ -82,7 +97,7 @@ public class GUIView extends JFrame implements ActionListener {
 		pannel.add(scroll);
 		add(pannel);
 		setBounds(100,100,500,500);
-		pannel.setBackground(new Color(255,178,102));
+		pannel.setBackground(new Color(250,120,220));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
@@ -94,8 +109,8 @@ public class GUIView extends JFrame implements ActionListener {
 		Loginbtn = new JButton("로그인");
 		exitbtn = new JButton("종료");
 		joinbtn = new JButton("회원가입");
-		txid = new JTextField("ID");
-		txpw = new JTextField("PW");
+		txid = new JTextField();
+		txpw = new JTextField();
 		
 		txid.setBounds(10,10,350,40);
 		txpw.setBounds(10,60,350,40);
@@ -112,6 +127,7 @@ public class GUIView extends JFrame implements ActionListener {
 		Loginview.add(loginpanel);
 		Loginview.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		Loginview.setVisible(false);
+		loginpanel.setBackground(new Color(180,250,230));
 		
 		
 		
@@ -156,19 +172,92 @@ public class GUIView extends JFrame implements ActionListener {
 		Prodview.add(prodpanel);
 		Prodview.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		Prodview.setVisible(false);
+		prodpanel.setBackground(new Color(140,240,250));
 		
 		
 		
 		
-		Joinview.setBounds(100,100,500,500);
+		Joinview.setBounds(100,100,300,350);
 		JPanel joinpanel = new JPanel();
 		joinpanel.setLayout(null);
-		txprodname2 = new JTextField();
-		txprodname2.setBounds(120,20,170,35);
-		txprodamount = new JTextField();
-		txprodamount.setBounds(120,65,170,35);
-		txprodprice = new JTextField();
-		txprodprice.setBounds(120,110,170,35);
+		joinpanel.setBackground(new Color(250,110,100));
+		
+		
+		okbtn = new JButton("확인");
+		okbtn.setBounds(10,250,100,35);
+		okbtn.addActionListener(this);;
+		nobtn = new JButton("취소");
+		nobtn.setBounds(170,250,100,35);
+		nobtn.addActionListener(this);
+		
+		txjoinID = new JTextField();
+		txjoinID.setBounds(100,20,170,35);
+		txjoinPW = new JTextField();
+		txjoinPW.setBounds(100,65,170,35);
+		txjoinName = new JTextField();
+		txjoinName.setBounds(100,110,170,35);
+		txjoinAddr = new JTextField();
+		txjoinAddr.setBounds(100,155,170,35);
+		txjoinPhone = new JTextField();
+		txjoinPhone.setBounds(100,200,170,35);
+		
+		
+		lbjoinID = new JLabel("아이디(이메일)");
+		lbjoinID.setBounds(10,20,130,35);
+		lbjoinPW = new JLabel("비밀번호");
+		lbjoinPW.setBounds(10,65,130,35);
+		lbjoinName = new JLabel("성명");
+		lbjoinName.setBounds(10,110,130,35);
+		lbjoinAddr = new JLabel("주소");
+		lbjoinAddr.setBounds(10,155,130,35);
+		lbjoinPhone = new JLabel("연락처");
+		lbjoinPhone.setBounds(10,200,130,35);
+		
+		joinpanel.add(txjoinID);joinpanel.add(txjoinPW);
+		joinpanel.add(txjoinName);joinpanel.add(txjoinAddr);joinpanel.add(txjoinPhone);
+		joinpanel.add(lbjoinID);joinpanel.add(lbjoinPW);
+		joinpanel.add(lbjoinName);joinpanel.add(lbjoinAddr);joinpanel.add(lbjoinPhone);
+		joinpanel.add(okbtn);joinpanel.add(nobtn);
+		
+		Joinview.add(joinpanel);
+		Joinview.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		Joinview.setVisible(false);
+		
+		// Controller 관련 처리 멤버
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		MemDTO dto = new MemDTO();
+//		try
+//		{
+//			String id = txid.getText();
+//			String pw = txpw.getText();
+//			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SYSTEM","1234");
+//			pstmt = conn.prepareStatement("select loginstatus from mem_tbl where ID=?");
+//			pstmt.setString(1, id);
+//			rs = pstmt.executeQuery();
+//			if(rs != null)
+//			{
+//				if(rs.next())
+//				{
+//					if(rs.getInt("loginstatus") == 0)
+//					{
+//						loginstatus = 1;
+//						perm = 1;
+//						if(rs.getInt("perm") == 2)
+//							perm = 2;
+//					}
+//					else
+//						System.out.println("[SYSTEM] 현재 로그인 상태입니다");
+//				}
+//			}
+//		} catch (Exception e) {e.printStackTrace();}
+//		finally
+//		{
+//			try
+//			{
+//				rs.close(); pstmt.close();
+//				}catch(Exception e) {e.printStackTrace();}
+//		}
 		
 	}
 	
@@ -199,7 +288,7 @@ public class GUIView extends JFrame implements ActionListener {
 		{
 			if(perm < 2)
 			{
-				if(!Loginstate)
+				if(loginstatus == 0)
 				{
 					JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다.");
 					Loginview.setVisible(true);
@@ -229,7 +318,7 @@ public class GUIView extends JFrame implements ActionListener {
 		
 		if(e.getSource() == btn5)
 		{
-			if(Loginstate)
+			if(loginstatus == 1)
 			{
 				JOptionPane.showMessageDialog(null, "이미 로그인 상태입니다.");
 			}
@@ -241,14 +330,15 @@ public class GUIView extends JFrame implements ActionListener {
 		
 		if(e.getSource() == btn6)
 		{
-			if(!Loginstate)
+			if(loginstatus == 0)
 			{
 				JOptionPane.showMessageDialog(null, "로그인 상태가 아닙니다");
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(null, "로그아웃 합니다");
-				Loginstate = false;
+				controller.ExSubController("/auth", 2, new MemDTO());
+				loginstatus = 0;
 				perm = 0;
 			}
 		}
@@ -257,30 +347,61 @@ public class GUIView extends JFrame implements ActionListener {
 		{
 			String id = txid.getText();
 			String pw = txpw.getText();
-			if(id.equals("admin") && pw.equals("1234"))
+			if(!id.equals("") && !pw.equals(""))
 			{
-				Loginstate = true;
-				perm = 2;
-				JOptionPane.showMessageDialog(null, "로그인 성공");
-				Loginview.setVisible(false);
+				MemDAO dao = new MemDAO();
+				controller.ExSubController("/auth", 1, new MemDTO(id, pw));
+				Object test = dao.Select();
+				System.out.println(test);
+				if(test == null)
+				{
+					System.out.println(test);
+					JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 확인해주세요");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "로그인에 성공하셨습니다.");
+					Loginview.setVisible(false);
+					loginstatus = 1;
+					perm = 1;
+				}
 			}
-			else if(id.equals("user") && pw.equals("1234"))
-			{
-				Loginstate = true;
-				perm = 1;
-				JOptionPane.showMessageDialog(null, "로그인 성공");
-				Loginview.setVisible(false);
-			}
-			
 			else
 			{
-				JOptionPane.showMessageDialog(null, "로그인 실패");
-				Loginview.setVisible(true);
+				System.out.println("ㅋㅋㅋ");
+				JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 입력해주세요");
 			}
+			txid.setText("");
+			txpw.setText("");
 		}
 		
 		if(e.getSource() == exitbtn)
 			Loginview.setVisible(false);
+		
+		if(e.getSource() == joinbtn)
+		{
+			JOptionPane.showMessageDialog(null, "회원가입을 진행합니다");
+			Joinview.setVisible(true);
+		}
+		
+		if(e.getSource() == okbtn)
+		{
+			String ID = txjoinID.getText();
+			String PW = txjoinPW.getText();
+			String Name = txjoinName.getText();
+			String Addr = txjoinAddr.getText();
+			String Phone = txjoinPhone.getText();
+			controller.ExSubController("/mem", 1, new MemDTO(ID, PW, Name, Addr, Phone));
+			JOptionPane.showMessageDialog(null, Name + "님 회원 가입을 환영합니다");
+			Joinview.setVisible(false);
+		}
+		
+		if(e.getSource() == nobtn)
+		{
+			Joinview.setVisible(false);
+		}
+		
+		
 		
 		if(e.getSource() == Insert)
 		{

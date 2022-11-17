@@ -69,7 +69,7 @@ public class UserDAO {
 			int result = 0;
 			try
 			{
-				pstmt = conn.prepareStatement("select loginstatus,userid from usertbl where username=?");
+				pstmt = conn.prepareStatement("select loginstatus,userid from usertbl where id=?");
 				pstmt.setString(1, name);
 				rs = pstmt.executeQuery();
 				if(rs != null)
@@ -80,7 +80,7 @@ public class UserDAO {
 					dto.setUserid(rs.getInt("userid"));
 					if(rs.getInt("loginstatus") == 0)
 					{
-						pstmt = conn.prepareStatement("update usertbl set loginstatus=? where userid=?");
+						pstmt = conn.prepareStatement("update usertbl set loginstatus=? where id=?");
 						pstmt.setInt(1, 1);
 						pstmt.setInt(2, dto.getUserid());
 						result = pstmt.executeUpdate();

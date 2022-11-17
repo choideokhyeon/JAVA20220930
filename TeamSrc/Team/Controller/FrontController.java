@@ -18,6 +18,7 @@ public class FrontController {
 	{
 		map.put("/prod", new ProdController());
 		map.put("/mem", new MemController());
+		map.put("/auth", new AuthController());
 	}
 	
 	public Object ExSubController(String menu, int SN, DTO dto)
