@@ -21,6 +21,16 @@ public class MemController implements SubController{
 					obj = "[SYSTEM]회원 가입에 성공했습니다";
 				else
 					obj = "[SYSTEM]회원 가입에 실패했습니다";
+			case 2:
+				MemDTO down2 = (MemDTO)dto;
+				flag = service.ViewMem(down2.getID());
+				if(flag)
+					obj = "[SYSTEM]멤버를 불러옵니다";
+				else
+					obj = "[SYSTEM]열람에 실패했습니다";
+			case 3:
+				MemDTO down3 = (MemDTO)dto;
+				service.Login(down3.getID(), down3.getPW());
 		}
 		
 		

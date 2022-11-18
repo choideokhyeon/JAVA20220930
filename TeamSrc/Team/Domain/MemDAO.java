@@ -1,10 +1,11 @@
 package Team.Domain;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.lang.reflect.Method;
+import java.sql.*;
+
+import org.jsoup.select.Evaluator.Id;
+
+import Ch38.Domain.MemberDTO;
 
 public class MemDAO {
 	String id = "SYSTEM";
@@ -34,11 +35,6 @@ public class MemDAO {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		finally
-		{
-			try {conn.close();}
-			catch(Exception e) {e.printStackTrace();}
-		}
 	}
 	
 	public int Insert(MemDTO dto)
@@ -63,66 +59,27 @@ public class MemDAO {
 		return result;
 	}
 	
-	public MemDTO Loginstatus(String userid)
+	public MemDTO Select(String id)
 	{
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		MemDTO dto = new MemDTO();
-		int result = 0;
+		MemDTO dto = null;
 		try
 		{
-			Connection conn = DriverManager.getConnection(url, id, pw);
-			pstmt = conn.prepareStatement("select loginstatus from mem_tbl where ID=?");
-			pstmt.setString(1, userid);
-			rs = pstmt.executeQuery();
-			if(rs != null)
-			{
-				rs.next();
-				if(rs.getInt("loginstatus") == 0)
-				{
-					pstmt = conn.prepareStatement("update mem_tbl set loginstatus=? where id=?");
-					pstmt.setInt(1, 1);
-					pstmt.setString(2, userid);
-					result = pstmt.executeUpdate();
-					return dto;
-				}
-				else
-					System.out.println("[SYSTEM] 현재 로그인 상태입니다");
-			}
-		} catch (Exception e) {e.printStackTrace();}
-		finally
-		{
-			try
-			{
-				rs.close(); pstmt.close();
-				}catch(Exception e) {e.printStackTrace();}
-		}
-		return dto;
-	}
-	
-	public int Logout(String id)
-	{
-		MemDTO dto = new MemDTO();
-		int result = 0;
-		try
-		{
-			pstmt = conn.prepareStatement("select loginstatus,id from mem_tbl where id=?");
+			pstmt = conn.prepareStatement("select * from mem_tbl where id=?");
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if(rs != null)
 			{
-				rs.next();
-				dto.setLoginstatus(rs.getInt("loginstatus"));
-				dto.setID(rs.getString("id"));
-				if(rs.getInt("loginstatus") == 1)
+				while(rs.next())
 				{
-					pstmt = conn.prepareStatement("update mem_tbl set loginstatus=? where id=?");
-					pstmt.setInt(1, 0);
-					pstmt.setString(2, dto.getID());
-					result = pstmt.executeUpdate();
-				}
-				else {
-					System.out.println("[SYSTEM] 현재 로그아웃중입니다");
+					dto = new MemDTO();
+					dto.setID(rs.getString(1));
+					dto.setPW(rs.getString(2));
+					dto.setName(rs.getString(3));
+					dto.setAddr(rs.getString(4));
+					dto.setPhone(rs.getString(5));
+					dto.setJoinDate(rs.getString(6));
+					dto.setPerm(rs.getInt(7));
+					dto.setLoginstatus(rs.getInt(8));
 				}
 			}
 		} catch (Exception e) {e.printStackTrace();}
@@ -131,48 +88,33 @@ public class MemDAO {
 			try
 			{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
 		}
-
-		return result;
+		
+		return dto;
 	}
 	
-	public MemDTO Select()
+	public int Update(MemDTO dto, String column)
 	{
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		MemDTO dto = new MemDTO();
 		int result = 0;
 		try
 		{
-			Connection conn = DriverManager.getConnection(url, id, pw);
-			pstmt = conn.prepareStatement("select * from mem_tbl");
-			rs = pstmt.executeQuery();
-			if(rs != null)
-			{
-				while(rs.next())
-				{
-					System.out.println("ㅇㅇ");
-					rs.getString("id");
-					rs.getString("pw");
-					rs.getString("name");
-					rs.getString("addr");
-					rs.getString("phone");
-					rs.getString("joindate");
-					rs.getInt("perm");
-					rs.getInt("loginstatus");
-				}
-				result = pstmt.executeUpdate();
-				return dto;
-			}
-			else
-				return null;
-		} catch (Exception e) {e.printStackTrace();}
+			pstmt = conn.prepareStatement("update mem_tbl set " + column + "=? where id=?");
+			pstmt.setString(2, dto.getID());
+//			dto.get + column + ();
+			
+//			Method method = MemDAO.class.getMethod("get"+column);
+//			System.out.println("method :" + method.getName());
+			
+		}catch (Exception e) {e.printStackTrace();}
 		finally
 		{
 			try
-			{
-				rs.close(); pstmt.close();
-				}catch(Exception e) {e.printStackTrace();}
+			{pstmt.close();}catch(Exception e) {e.printStackTrace();}
 		}
-		return dto;
+		
+		return result;
+	}
+
+	public static void main(String[] args) {
+		 
 	}
 }

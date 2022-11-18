@@ -1,5 +1,6 @@
 package Team.Service;
 
+import Team.Domain.DTO;
 import Team.Domain.MemDAO;
 import Team.Domain.MemDTO;
 
@@ -24,4 +25,22 @@ public class MemService {
 			return true;
 		return false;
 	}
+
+	public boolean ViewMem(String id)
+	{
+		dao.Select(id);
+		return false;
+	}
+	
+	public MemDTO Login(String id, String pw)
+	{
+		MemDTO dto = new MemDTO();
+		if(dao.Select(id).getLoginstatus() == 0)
+		{
+			
+		}
+		
+		return dto;
+	}
+
 }

@@ -223,42 +223,6 @@ public class GUIView extends JFrame implements ActionListener {
 		Joinview.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		Joinview.setVisible(false);
 		
-		// Controller 관련 처리 멤버
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		MemDTO dto = new MemDTO();
-//		try
-//		{
-//			String id = txid.getText();
-//			String pw = txpw.getText();
-//			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SYSTEM","1234");
-//			pstmt = conn.prepareStatement("select loginstatus from mem_tbl where ID=?");
-//			pstmt.setString(1, id);
-//			rs = pstmt.executeQuery();
-//			if(rs != null)
-//			{
-//				if(rs.next())
-//				{
-//					if(rs.getInt("loginstatus") == 0)
-//					{
-//						loginstatus = 1;
-//						perm = 1;
-//						if(rs.getInt("perm") == 2)
-//							perm = 2;
-//					}
-//					else
-//						System.out.println("[SYSTEM] 현재 로그인 상태입니다");
-//				}
-//			}
-//		} catch (Exception e) {e.printStackTrace();}
-//		finally
-//		{
-//			try
-//			{
-//				rs.close(); pstmt.close();
-//				}catch(Exception e) {e.printStackTrace();}
-//		}
-		
 	}
 	
 	@Override
@@ -337,7 +301,7 @@ public class GUIView extends JFrame implements ActionListener {
 			else
 			{
 				JOptionPane.showMessageDialog(null, "로그아웃 합니다");
-				controller.ExSubController("/auth", 2, new MemDTO());
+//				controller.ExSubController("/auth", 2, new MemDTO());
 				loginstatus = 0;
 				perm = 0;
 			}
@@ -350,27 +314,36 @@ public class GUIView extends JFrame implements ActionListener {
 			if(!id.equals("") && !pw.equals(""))
 			{
 				MemDAO dao = new MemDAO();
-				controller.ExSubController("/auth", 1, new MemDTO(id, pw));
-				Object test = dao.Select();
-				System.out.println(test);
-				if(test == null)
+				if(dao.Select(id) == null)
 				{
-					System.out.println(test);
-					JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 확인해주세요");
+					JOptionPane.showMessageDialog(null, "로그인에 실패했습니다");
+					Loginview.setVisible(true);
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "로그인에 성공하셨습니다.");
-					Loginview.setVisible(false);
-					loginstatus = 1;
-					perm = 1;
+					dao.Select(id);
+					System.out.println(dao.Select(id).getID());
+					controller.ExSubController("/auth", 1, new MemDTO(id,pw));
+					if(dao.Select(id).getPerm() > 0)
+					{
+						JOptionPane.showMessageDialog(null, dao.Select(id).getName() + "님 반갑습니다");
+						loginstatus = 1;
+						//update 구현
+						
+						Loginview.setVisible(false);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "로그인에 실패했습니다");
+						Loginview.setVisible(true);
+					}
 				}
 			}
 			else
 			{
-				System.out.println("ㅋㅋㅋ");
-				JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 입력해주세요");
+				JOptionPane.showMessageDialog(null, "아이디와 패스워드가 입력되지 않았습니다");
 			}
+			
 			txid.setText("");
 			txpw.setText("");
 		}
