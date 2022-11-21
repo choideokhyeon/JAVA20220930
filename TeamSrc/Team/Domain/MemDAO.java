@@ -1,11 +1,6 @@
 package Team.Domain;
 
-import java.lang.reflect.Method;
 import java.sql.*;
-
-import org.jsoup.select.Evaluator.Id;
-
-import Ch38.Domain.MemberDTO;
 
 public class MemDAO {
 	String id = "SYSTEM";
@@ -79,7 +74,7 @@ public class MemDAO {
 					dto.setPhone(rs.getString(5));
 					dto.setJoinDate(rs.getString(6));
 					dto.setPerm(rs.getInt(7));
-					dto.setLoginstatus(0);
+					dto.setLoginstatus(rs.getInt(8));
 					System.out.println("MEMDAO : " + dto.getLoginstatus());
 				}
 			}
