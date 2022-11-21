@@ -6,7 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="TeamSrc"/>
 	<classpathentry kind="lib" path="C:/정보처리/03 프로그래밍 언어 활용/bcrypt-0.3.jar"/>
 	<classpathentry kind="lib" path="C:/정보처리/03 프로그래밍 언어 활용/jsoup-1.15.3.jar"/>
 	<classpathentry kind="lib" path="C:/정보처리/03 프로그래밍 언어 활용/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar"/>
