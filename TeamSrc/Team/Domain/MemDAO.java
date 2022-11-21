@@ -79,7 +79,8 @@ public class MemDAO {
 					dto.setPhone(rs.getString(5));
 					dto.setJoinDate(rs.getString(6));
 					dto.setPerm(rs.getInt(7));
-					dto.setLoginstatus(rs.getInt(8));
+					dto.setLoginstatus(0);
+					System.out.println("MEMDAO : " + dto.getLoginstatus());
 				}
 			}
 		} catch (Exception e) {e.printStackTrace();}
@@ -92,29 +93,25 @@ public class MemDAO {
 		return dto;
 	}
 	
-	public int Update(MemDTO dto, String column)
+//	dto.get + column + ();
+//	Method method = MemDAO.class.getMethod("get"+column);
+//	System.out.println("method :" + method.getName());
+	
+	public int Login(MemDTO dto)
 	{
 		int result = 0;
 		try
 		{
-			pstmt = conn.prepareStatement("update mem_tbl set " + column + "=? where id=?");
-			pstmt.setString(2, dto.getID());
-//			dto.get + column + ();
-			
-//			Method method = MemDAO.class.getMethod("get"+column);
-//			System.out.println("method :" + method.getName());
-			
+			pstmt = conn.prepareStatement("update mem_tbl set loginstatus=1 where id=?");
+			pstmt.setString(1, dto.getID());
+			result = pstmt.executeUpdate();
 		}catch (Exception e) {e.printStackTrace();}
 		finally
 		{
 			try
-			{pstmt.close();}catch(Exception e) {e.printStackTrace();}
+			{rs.close(); pstmt.close();}catch(Exception e) {e.printStackTrace();}
 		}
 		
 		return result;
-	}
-
-	public static void main(String[] args) {
-		 
 	}
 }

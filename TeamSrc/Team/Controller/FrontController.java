@@ -7,14 +7,14 @@ import Team.Domain.DTO;
 
 public class FrontController {
 	
-	private Map<String, SubController> map = new HashMap();
+	private final Map<String, SubController> map = new HashMap<>();
 	
 	public FrontController()
 	{
 		init();
 	}
 	
-	private void init()
+	private final void init()
 	{
 		map.put("/prod", new ProdController());
 		map.put("/mem", new MemController());

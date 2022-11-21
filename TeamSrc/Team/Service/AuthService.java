@@ -37,7 +37,7 @@ public class AuthService {
 		
 		if(id.equals(dto.getID()) && pw.equals(dto.getPW()))
 		{
-			return dto.getLoginstatus();
+			return dao.Login(dto);
 		}
 		
 		return null;

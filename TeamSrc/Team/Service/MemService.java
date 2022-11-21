@@ -37,7 +37,7 @@ public class MemService {
 		MemDTO dto = new MemDTO();
 		if(dao.Select(id).getLoginstatus() == 0)
 		{
-			
+			dao.Login(dto);
 		}
 		
 		return dto;

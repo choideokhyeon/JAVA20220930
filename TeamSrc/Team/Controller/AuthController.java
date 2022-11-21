@@ -19,7 +19,7 @@ public class AuthController implements SubController
 				String id = down.getID();
 				String pw = down.getPW();
 				if(id != null || pw != null)
-					return service.LoginCheck(id, pw);
+					service.LoginCheck(id, pw);
 				break;
 			case 2:
 //				MemDTO down2 = (MemDTO)dto;

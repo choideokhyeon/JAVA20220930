@@ -228,6 +228,9 @@ public class GUIView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		MemDAO dao = new MemDAO();
+		MemDTO dto = new MemDTO();
+		
 		if(e.getSource() == btn1)
 		{
 			area.setText("");
@@ -301,7 +304,7 @@ public class GUIView extends JFrame implements ActionListener {
 			else
 			{
 				JOptionPane.showMessageDialog(null, "로그아웃 합니다");
-//				controller.ExSubController("/auth", 2, new MemDTO());
+				controller.ExSubController("/auth", 1, new MemDTO());
 				loginstatus = 0;
 				perm = 0;
 			}
@@ -311,39 +314,20 @@ public class GUIView extends JFrame implements ActionListener {
 		{
 			String id = txid.getText();
 			String pw = txpw.getText();
-			if(!id.equals("") && !pw.equals(""))
+//			System.out.println(dao.Select(id));
+			if(id.equals("") || pw.equals(""))
 			{
-				MemDAO dao = new MemDAO();
-				if(dao.Select(id) == null)
-				{
-					JOptionPane.showMessageDialog(null, "로그인에 실패했습니다");
-					Loginview.setVisible(true);
-				}
-				else
-				{
-					dao.Select(id);
-					System.out.println(dao.Select(id).getID());
-					controller.ExSubController("/auth", 1, new MemDTO(id,pw));
-					if(dao.Select(id).getPerm() > 0)
-					{
-						JOptionPane.showMessageDialog(null, dao.Select(id).getName() + "님 반갑습니다");
-						loginstatus = 1;
-						//update 구현
-						
-						Loginview.setVisible(false);
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(null, "로그인에 실패했습니다");
-						Loginview.setVisible(true);
-					}
-				}
+				JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 입력해주세요");
+			}
+			
+			if(dao.Select(id) == null)
+			{
+				JOptionPane.showMessageDialog(null, "존재하지 않는 아이디 입니다.");
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, "아이디와 패스워드가 입력되지 않았습니다");
+				JOptionPane.showMessageDialog(null, "로그인 했습니다.");
 			}
-			
 			txid.setText("");
 			txpw.setText("");
 		}
